@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ciclogenius - Cadastro de Bicicletas</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="logomenu">
+        <a href="{{ url_for('index') }}"> <img src="{{ url_for('static', filename='css/logo2.png') }}" alt=""></a>
+
+    </div>
+
+
+    <section>
+        <img src="{{ url_for('static', filename='css/bg.png') }}" class="bg">
+        <img src="{{ url_for('static', filename='css/girl.png') }}" class="girl">
+        <div class="Leaves">
+            <div class="set">
+                <div><img src="{{ url_for('static', filename='css/leaf_01.png') }}"></div>
+                <div><img src="{{ url_for('static', filename='css/leaf_02.png') }}"></div>
+                <div><img src="{{ url_for('static', filename='css/leaf_03.png') }}"></div>
+                <div><img src="{{ url_for('static', filename='css/leaf_04.png') }}"></div>
+                <div><img src="{{ url_for('static', filename='css/leaf_01.png') }}"></div>
+                <div><img src="{{ url_for('static', filename='css/leaf_02.png') }}"></div>
+                <div><img src="{{ url_for('static', filename='css/leaf_03.png') }}"></div>
+                <div><img src="{{ url_for('static', filename='css/leaf_04.png') }}"></div>
+            </div>
+        </div>
+
+        <div class="Login">
+            <h2>Cadastro de Bicicleta</h2>
+            <form method="post" action="{{ url_for('processar_cadastro') }}">
+                <div class="inputBox"> <input type="text" name="modelo" placeholder="Modelo da Bicicleta"></div>
+                <div class="inputBox"> <input type="text" name="ano_fabricacao" placeholder="Ano de Fabricação"></div>
+                <div class="inputBox"> <input type="text" name="numero_serie" placeholder="Número de Série"></div>
+                <div class="inputBox"> <input type="text" name="cor" placeholder="Cor da Bicicleta"></div>
+                <div class="inputBox"> <input type="text" name="marca" placeholder="Marca da Bicicleta"></div>
+                <div class="inputBox"> <input type="text" name="valor" placeholder="Valor da Bicicleta"></div>
+                <div class="inputBox">
+                    <input type="button" value="Cadastrar" id="cadastroButton">
+                </div>
+                <div class="group">
+                    <a href="">Já possui cadastro?</a> <a href="#">Entre aqui</a>
+                </div>
+            </form>
+        </div>
+        <img src="{{ url_for('static', filename='css/trees.png') }}" class="trees">
+        <a href="{{ url_for('partes') }}" id="reconhecimentoLink" style="display: none;">Ir para a Página de
+            Reconhecimento</a>
+
+        <!-- Pop-up modal -->
+        <div id="myModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <p>O cadastro foi realizado com sucesso!</p>
+                <p>Deseja ir para a página de reconhecimento?</p>
+                <button id="goToReconhecimento">Ir para a Página de Reconhecimento</button>
+                <button id="fecharPopup">Agora não</button>
+            </div>
+        </div>
+
+        <script>
+            // Função para mostrar o pop-up modal
+            function showModal() {
+                var modal = document.getElementById("myModal");
+                modal.style.display = "block";
+            }
+
+            // Adicionar um evento de clique ao botão "Cadastrar"
+            var cadastroButton = document.getElementById("cadastroButton");
+            cadastroButton.addEventListener("click", function (event) {
+                event.preventDefault(); // Impede o envio do formulário
+                // Simule um cadastro bem-sucedido e, em seguida, mostre o modal
+                setTimeout(function () {
+                    showModal();
+                }, 2000); // Tempo de simulação (2 segundos)
+            });
+
+            var goToReconhecimentoButton = document.getElementById("goToReconhecimento");
+            goToReconhecimentoButton.addEventListener("click", function () {
+                var reconhecimentoLink = document.getElementById("reconhecimentoLink");
+                reconhecimentoLink.style.display = "block";
+                window.location.href = "{{ url_for('partes') }}";
+            });
+
+            var fecharPopupButton = document.getElementById("fecharPopup");
+            fecharPopupButton.addEventListener("click", function () {
+                var modal = document.getElementById("myModal");
+                modal.style.display = "none";
+            });
+
+            var cadastroButton = document.getElementById("cadastroButton");
+            cadastroButton.addEventListener("click", function (event) {
+                event.preventDefault(); // Impede o envio do formulário
+
+                // Obtenha os dados do formulário
+                var modelo = document.querySelector('input[name="bike_modelo"]').value;
+                var ano_fabricacao = document.querySelector('input[name="ano_fabricacao"]').value;
+                var numero_serie = document.querySelector('input[name="numero_serie"]').value;
+                var cor = document.querySelector('input[name="bike_cor"]').value;
+                var marca = document.querySelector('input[name="bike_marca"]').value;
+                var valor = document.querySelector('input[name="bike_valor"]').value;
+
+                // Crie um objeto JSON com os dados do formulário
+                var data = {
+                    modelo: bike_modelo,
+                    ano_fabricacao: ano_fabricacao,
+                    numero_serie: numero_serie,
+                    cor: bike_cor,
+                    marca: bike_marca,
+                    valor: bike_valor
+                };
+
+                // Faça a solicitação POST para a rota de processamento
+                fetch("/processar_cadastro", {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(function (response) {
+                    if (response.ok) {
+                        // Exiba o modal de sucesso ou redirecione para a página desejada
+                        showModal();
+                    } else {
+                        // Lida com erros, se necessário
+                    }
+                });
+            });
+        </script>
+    </section>
+</body>
+
+</html>

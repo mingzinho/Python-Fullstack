@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+<head>
+    <title>Reconhecimento de Texto</title>
+</head>
+<div class="logomenu">
+    <a href="{{ url_for('index') }}"> <img src="{{ url_for('static', filename='css/logo2.png') }}" alt=""></a>
+</div>
+
+<body>
+    <section>
+        <img src="{{ url_for('static', filename='css/bg.png') }}" class="bg">
+        <img src="{{ url_for('static', filename='css/trees.png') }}" class="trees">
+        <h1 class="title"></h1>
+        <div class="image-container">
+            <div id="webcam-container">
+                <!-- Adicione um elemento de vídeo para exibir a transmissão da webcam -->
+                <video id="webcam-stream" autoplay playsinline style="max-width: 100%;"></video>
+            </div>
+
+            <form id="capture-form" style="display: block;">
+                <button type="button" id="capture-button">Capturar Imagem</button>
+            </form>
+
+            <form id="upload-form" style="display: none;">
+                <button type="button" id="upload-button">Enviar Imagem</button>
+            </form>
+
+            <!-- Adicione um elemento <img> para exibir a imagem selecionada -->
+            <img id="selected-image" style="display: none; max-width: 100%">
+
+            <div id="result"></div>
+        </div>
+
+        <script>
+            var webcamContainer = document.getElementById('webcam-container');
+            var webcamStream = document.getElementById('webcam-stream');
+            var captureForm = document.getElementById('capture-form');
+            var captureButton = document.getElementById('capture-button');
+            var uploadForm = document.getElementById('upload-form');
+            var uploadButton = document.getElementById('upload-button');
+            var selectedImage = document.getElementById('selected-image');
+            var result = document.getElementById('result');
+
+            var userMediaStream = null;
+
+            function startWebcam() {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 } })  // Ajuste a resolução desejada
+                        .then(function (stream) {
+                            userMediaStream = stream;
+                            webcamStream.srcObject = stream;
+                            captureForm.style.display = 'block';
+                            selectedImage.style.display = 'none';
+                        })
+                        .catch(function (error) {
+                            console.error('Erro ao acessar a webcam:', error);
+                        });
+                } else {
+                    console.error('O navegador não suporta getUserMedia');
+                }
+            }
+
+            function stopWebcam() {
+                if (userMediaStream) {
+                    userMediaStream.getTracks().forEach(track => track.stop());
+                    userMediaStream = null;
+                }
+            }
+
+            startWebcam();
+
+            captureButton.addEventListener('click', function () {
+                var canvas = document.createElement('canvas');
+                canvas.width = webcamStream.videoWidth;
+                canvas.height = webcamStream.videoHeight;
+                var context = canvas.getContext('2d');
+
+                // Melhorias na captura da imagem
+                context.drawImage(webcamStream, 0, 0, canvas.width, canvas.height);
+                context.filter = 'contrast(1.2) brightness(1.2)';  // Ajuste o contraste e o brilho conforme necessário
+                context.drawImage(webcamStream, 0, 0, canvas.width, canvas.height);
+
+                canvas.toBlob(function (blob) {
+                    var formData = new FormData();
+                    formData.append('image', blob, 'captured_image.png');
+
+                    stopWebcam();
+
+                    selectedImage.src = URL.createObjectURL(blob);
+                    selectedImage.style.display = 'block';
+                    webcamContainer.style.display = 'none'; 
+                    uploadForm.style.display = 'block';
+                    captureForm.style.display = 'none';
+
+                    uploadButton.addEventListener('click', function () {
+                        fetch('/texto', {
+                            method: 'POST',
+                            body: formData,
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.error) {
+                                    result.textContent = 'Erro: ' + data.error;
+                                } else {
+                                    result.textContent = 'O número do chassi é: ' + data.text;
+                                }
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                result.textContent = 'Erro ao enviar imagem para o servidor.';
+                            });
+                    });
+                });
+            });
+        </script>
+    </section>
+</body>
+</html>

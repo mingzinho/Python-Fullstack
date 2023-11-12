@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+<head>
+    <title></title>
+    <script>
+        function exibirMensagem() {
+            alert("A análise foi concluída! Em alguns minutos retornaremos ;))");
+        }
+    </script>
+</head>
+
+
+<body>
+    <div class="logomenu">
+        <a href="{{ url_for('index') }}"> <img src="{{ url_for('static', filename='css/logo2.png') }}" alt=""></a>
+         
+     </div>
+
+    <section class="partes">
+        <div class="container1">
+            <div class="item-container">
+                <div class="item-box">
+                    <h2>Bicicleta</h2>
+                    <img src="{{ url_for('static', filename='css/bicicleta.png') }}" alt="Bicicleta Inteira">
+                    <div class="item-button">
+                        <a href="{{ url_for('reconhecimento') }}" class="button">Analise a Bike</a>
+                    </div>
+                </div>
+                <div class="item-box">
+                    <h2>Guidão</h2>
+                    <img src="{{ url_for('static', filename='css/guidao.png') }}" alt="Guidão">
+                    <div class="item-button">
+                        <a href="{{ url_for('reconhecimento') }}" class="button">Analise o Guidão</a>
+                    </div>
+                </div>
+                <div class="item-box">
+                    <h2>Rodas</h2>
+                    <img src="{{ url_for('static', filename='css/roda.png') }}" alt="Rodas">
+                    <div class="item-button">
+                        <a href="{{ url_for('reconhecimento') }}" class="button">Analise as Rodas</a>
+                    </div>
+                </div>
+                <div class="item-box">
+                    <h2>Quadro</h2>
+                    <img src="{{ url_for('static', filename='css/quadro.png') }}" alt="Quadro">
+                    <div class="item-button">
+                        <a href="{{ url_for('reconhecimento') }}" class="button">Analise o Quadro</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item-container">
+
+
+                <div class="item-box bottom-items">
+                    <h2>Chassi</h2>
+                    <img src="{{ url_for('static', filename='css/chassi.png') }}" alt="Chassi">
+                    <div class="item-button">
+                        <a href="{{ url_for('texto') }}" class="button">Verifique o Chassi</a>
+                    </div>
+                </div>
+                <div class="item-box bottom-items">
+                    <h2>Pedal</h2>
+                    <img src="{{ url_for('static', filename='css/pedal.png') }}" alt="Pedal">
+                    <div class="item-button">
+                        <a href="{{ url_for('reconhecimento') }}" class="button">Analise o Pedal</a>
+                    </div>
+                </div>
+                <div class="item-box bottom-items">
+                    <h2>Disco</h2>
+                    <img src="{{ url_for('static', filename='css/disco.png') }}" alt="Disco">
+                    <div class="item-button">
+                        <a href="{{ url_for('reconhecimento') }}" class="button">Analise o Disco</a>
+                    </div>
+                </div>
+                <div class="item-box bottom-items">
+                    <h2>Banco</h2>
+                    <img src="{{ url_for('static', filename='css/banco.png') }}" alt="Banco">
+                    <div class="item-button">
+                        <a href="{{ url_for('reconhecimento') }}" class="button">Analise o Banco</a>
+                    </div>
+                </div>
+            </div>
+            <div class="Leaves">
+                <div class="set">
+
+                    <div><img src="{{ url_for('static', filename='css/leaf_01.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_02.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_03.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_04.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_01.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_02.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_03.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_04.png') }}"></div>
+                </div>
+            </body>
+        </div>
+        <img src="{{ url_for('static', filename='css/bg.png') }}" class="bg">
+        <img src="{{ url_for('static', filename='css/trees.png') }}" class="trees">
+        <div class="concluir-button">
+            <button onclick="exibirMensagem()">Concluído</button>
+        </div>
+        </div>
+
+
+    </section>
+
+
+</body>
+
+</html>

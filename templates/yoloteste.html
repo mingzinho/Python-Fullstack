@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Teste Yolo</title>
+    <link rel="stylesheet" type="text/css"  href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<div class="logomenu">
+    <a href="{{ url_for('index') }}"> <img src="{{ url_for('static', filename='css/logo2.png') }}" alt=""></a>
+     
+ </div>
+
+<body>
+
+
+    <section>
+        <img src="{{ url_for('static', filename='css/bg.png') }}" class="bg">
+        <h1 class="title"></h1>
+        <div class="image-container">
+            <img id="video-feed" src="{{ url_for('video_feed') }}" class="video-image">
+            <button id="capture-image" class="btn">Capturar Imagem</button>
+            <img id="captured-image" style="display: none;" class="captured-image">
+            <button id="save-image" class="btn">Salvar Imagem</button>
+            <a id="image-link" style="display: none;" download="captured_image.jpg" class="download-link">Clique aqui para baixar a imagem capturada</a>
+        </div>
+
+        <script>
+            const captureImageButton = document.getElementById("capture-image");
+            const saveImageButton = document.getElementById("save-image");
+            const videoFeed = document.getElementById("video-feed");
+            const capturedImage = document.getElementById("captured-image");
+            const imageLink = document.getElementById("image-link");
+            const popup = document.getElementById("popup");
+            const popupContent = document.getElementById("popup-content");
+            const closePopupButton = document.getElementById("close-popup");
+            
+        
+            let imageData = null;
+        
+            captureImageButton.addEventListener("click", async () => {
+                // Lógica para capturar a imagem atual da webcam
+                const canvas = document.createElement("canvas");
+                canvas.width = videoFeed.width;
+                canvas.height = videoFeed.height;
+                const context = canvas.getContext("2d");
+                context.drawImage(videoFeed, 0, 0, canvas.width, canvas.height);
+                imageData = canvas.toDataURL("image/jpeg");
+        
+                // Exibir a imagem capturada na página
+                videoFeed.style.display = "none";
+                capturedImage.src = imageData;
+                capturedImage.style.display = "block";
+        
+                // Enviar a imagem para a API e exibir o resultado
+                sendImageToApi(imageData);
+            });
+        
+            saveImageButton.addEventListener("click", () => {
+                // Lógica para baixar a imagem capturada
+                if (imageData) {
+                    const a = document.createElement("a");
+                    a.href = imageData;
+                    a.download = "captured_image.jpg";
+                    a.click();
+                }
+            });
+        
+
+closePopupButton.addEventListener("click", () => {
+    // Fechar o popup ao clicar no botão "Fechar"
+    popup.style.display = "none";
+});
+        </script>
+
+            <img src="{{ url_for('static', filename='css/trees.png') }}" class="trees">
+
+        <img src="{{ url_for('static', filename='css/girl.png') }}" class="girl">
+    </section>
+</body>
+
+</html>

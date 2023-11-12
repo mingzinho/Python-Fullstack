@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Ciclogenius - Página Inicial</title>
+</head>
+
+
+    <body>
+        <div class="logomenu">
+            <a href="{{ url_for('index') }}"> <img src="{{ url_for('static', filename='css/logo2.png') }}" alt=""></a>
+             
+         </div>
+        <section>
+            <div class="Leaves">
+                <div class="logo-container">
+                    <div class="logo2">
+                        <img src="{{ url_for('static', filename='css/fiap.png') }}" style="width: 170px; height: 50px;">
+                    </div>
+                    <div class="logo1">
+                        <img src="{{ url_for('static', filename='css/logo4.png') }}">
+                    </div>
+                    <div class="logo2">
+                        <img src="{{ url_for('static', filename='css/porto.png') }}" style="width: 200px; height: 50px;">
+                    </div>
+            </div>
+                <div class="set">
+                    
+                    <img src="{{ url_for('static', filename='css/trees.png') }}" class="trees">
+                    <div><img src="{{ url_for('static', filename='css/leaf_01.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/yolo.png') }}" style="width: 120px;"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_02.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/python.png') }}" style="width: 100px;"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_03.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/opencv.png') }}" style="width: 100px;"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_04.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_01.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_02.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_03.png') }}"></div>
+                    <div><img src="{{ url_for('static', filename='css/leaf_04.png') }}"></div>
+                </div>
+            </div>
+            <a href="{{ url_for('cadastro') }}" class="button">Cadastre sua bike!</a>
+            <a href="{{ url_for('yoloteste') }}" class="button">Teste o nosso YoloV8!</a>
+            
+            
+            <img src="{{ url_for('static', filename='css/girl.png') }}" class="girl">
+            <div class="video">
+                <h2>Veja como funciona nossa Inteligencia</h2>
+                <video width="560" height="300" controls>
+                    <source src="{{ url_for('video', filename='bikevideo5.mp4') }}" type="video/mp4">
+                    Seu navegador não suporta a reprodução de vídeos.
+                </video>
+            </div>
+        </section>
+        <img src="{{ url_for('static', filename='css/bg.png') }}" class="bg">
+    </body>
+    
+    <!-- Adicione um botão para a página de cadastro -->
+</body>
+</html>
